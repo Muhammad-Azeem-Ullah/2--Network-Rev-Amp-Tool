@@ -1,0 +1,240 @@
+192.168.80.13-Xbox one
+192.168.80.14-Ammar iPhone
+192.168.80.15-Shayan Windows
+192.168.80.16-nawaf android 
+192.168.80.17-shayan MBP 
+192.168.80.18-saad iphone  x 
+192.168.80.19-Mrs. Ammar's Iphone 
+192.168.80.20-ammar iphone x 
+192.168.80.21-Ammar Mrs iPhone 7 
+192.168.80.22-Ammar iPhone 
+192.168.80.23-Ammar Mrs Air 
+192.168.80.24-Apple TV 
+192.168.80.25-Ammar-Aria 
+192.168.80.26-Atif Windows 
+192.168.80.27-WR macbook 
+192.168.80.28-Ammar's Air port 
+192.168.80.29-fizz system 
+192.168.80.30-shayan iphone 
+192.168.80.31-ammar iphone 6 
+192.168.80.32-Ammar iPhone7 
+192.168.80.33-Ammar Air 
+192.168.80.34-Saad's apple watch 
+192.168.80.35-saad iphone7 
+192.168.80.36-Saad's iphone 6s 
+192.168.80.37-Mrs. Saad's Macbook Air 
+192.168.80.38-Saad's Macbook Pro 
+192.168.80.39-Atif Android 
+192.168.80.40-Waqas Android (OP3) 
+192.168.80.41-Faraz Win 
+192.168.80.42-bilal qa windows 
+192.168.80.43-A Bilal Mac Mini 
+192.168.80.44-lubna win 
+192.168.80.45-Harris Macbook 
+192.168.80.46-Mouna MacBook - 46 
+192.168.80.47-ahmar 
+192.168.80.48-zeeshan qa  
+192.168.80.49-faru mac mini 
+192.168.80.50-Asad MacMini 
+192.168.80.51-Umair MacBook 
+192.168.80.52-farhan asgahar qa windwos 
+192.168.80.53-salman ijaz 
+192.168.80.54-ali macbook 
+192.168.80.55-Azfar Win 
+192.168.80.56-arslan windwos 
+192.168.80.57-Zeeshu Macbook 
+192.168.80.58-alina windows 
+192.168.80.59-Hassan Tariq MacMini 
+192.168.80.60-Arsalan Rafiq iMac 
+192.168.80.61-Namvar Win 
+192.168.80.62-sharon Win 
+192.168.80.63-GM Macbook 
+192.168.80.64-qa 1st floor mac mini 
+192.168.80.65-Adeel MacMini 
+192.168.80.66-Shahid QA new  
+192.168.80.67-Zeeshan Shafic Win 
+192.168.80.68-M Bilal Mac Mini
+192.168.80.69-nawaf cousin 
+192.168.80.70-arslan rafique win 
+192.168.80.71-Amal Win 
+192.168.80.72-Kakul Win 
+192.168.80.73-raza Macbook 
+192.168.80.74-gems mac mini 
+192.168.80.75-Nawaf windows 
+192.168.80.76-Awais MacMini 
+192.168.80.77-zeeshan shafiq mac mini 
+192.168.80.78-ali misbah macbook pro 
+192.168.80.79-Hamza Windows 
+192.168.80.80-Fizz analytics left 
+192.168.80.81-Zeeshan bajwa Win 
+192.168.80.82-WM MacBook 
+192.168.80.83-hassan macbook 
+192.168.80.84-yesha Art 
+192.168.80.85-Ali QA 
+192.168.80.86-blades shared macmini 
+192.168.80.87-Ayisha Win 
+192.168.80.88-Osama mac mini 
+192.168.80.89-ahmad kamal mac mini 
+192.168.80.90-trident build machine 
+192.168.80.91-kashif mac lan 
+192.168.80.92-Bilal macmini 
+192.168.80.93-fazi macbook pro 
+192.168.80.94-Moosa Khan 
+192.168.80.95-Kashif Macbook 
+192.168.80.96-fizz analytics right 
+192.168.80.97-mohsan macbook pro 
+192.168.80.98-accountant win 
+192.168.80.99-salman art mac 
+192.168.80.100-new redmine 
+192.168.80.101-khalid windows 
+192.168.80.102-zeeshan khalid new 
+192.168.80.103-Shahzaib Windows
+192.168.80.104-Farwa
+192.168.80.105-Hassan tariq MBP
+192.168.80.106-Ahmer VM
+192.168.80.107-Asharaib system
+192.168.80.108-Farhan mbp
+192.168.80.109-Ahmad bilal mbp
+192.168.80.110-Ahmer mbp
+192.168.80.111-Sameer art
+192.168.80.112-Uraiba windows
+192.168.80.113-Uzair macbook
+192.168.81.2-iPhoneX 
+192.168.81.3-iPad Mini 
+192.168.81.4-iPod5 Black 
+192.168.81.5-iPod5 Grey 
+192.168.81.6-iPod5 Silver 
+192.168.81.7-iPod Grey 
+192.168.81.8-iPod5 Red Ali 
+192.168.81.9-Note 3 
+192.168.81.10-iPod5 Silver 
+192.168.81.11-iPod silver 
+192.168.81.12-iPhone 6+ 
+192.168.81.13-Amazon Fire HD 10 (5th gen) 
+192.168.81.14-Huaiwei L21 
+192.168.81.15-Samsung S6 Edge 
+192.168.81.16-iPhone 6 
+192.168.81.17-iPod5 Pink 
+192.168.81.18-pixel 
+192.168.81.19-Samsung S5 
+192.168.81.20-Nexus 5x 
+192.168.81.21-iPod Green 
+192.168.81.22-ipod5-blue02 
+192.168.81.23-Samsung S3 (GT-I9300) 
+192.168.81.24-Samsung tab S (SM-T800) 
+192.168.81.25-nexus 5 white 
+192.168.81.26-ipod5 blue 1 
+192.168.81.27-ipad mini 4 
+192.168.81.28-iphone 4S black 
+192.168.81.29-Amazon Fire HD 8 (5th Generation) 
+192.168.81.30-ipad2 -1011 
+192.168.81.31-Samsung tab (GT-P7500) 
+192.168.81.32-iphone 4 (black) 
+192.168.81.33-iphone 4S (white) 
+192.168.81.34-Huawei GR-3 (white) 
+192.168.81.35-nexus 6p 
+192.168.81.36-ipod 6 (pink) 
+192.168.81.37-Nexus 5 Black 
+192.168.81.38-iPad3 
+192.168.81.39-S4 White 
+192.168.81.40-caramelpcsipad 
+192.168.81.41-pink ipod6 
+192.168.81.42-ipod blakc 
+192.168.81.43-ipod6-blue 
+192.168.81.44-ipod6-Blue 
+192.168.81.45-ipod6-blue 
+192.168.81.46-ipod6-gold 
+192.168.81.47-ipod6-gold 
+192.168.81.48-ipod6-gold 
+192.168.81.49-note 5  
+192.168.81.50-nexus 6P 
+192.168.81.51-iphone x bob 
+192.168.81.52-Samsung F7 Edge 
+192.168.81.53-ipod5 black 
+192.168.81.54-S8+
+192.168.81.55-blue ipod6 cc 1
+192.168.81.56-black ipod6 cc 2
+192.168.81.57-black ipod6 cc 3
+192.168.81.58-pink ipod6 cc 4
+192.168.81.59-pink ipod6 cc 5
+192.168.81.60-pink ipod6 cc 6
+192.168.81.61-silver ipod6 cc 7
+192.168.81.62-pink ipod6 cc 8
+192.168.81.63-Galaxy Tab S3
+192.168.81.64-Note 8
+192.168.81.65-Galaxy S9
+192.168.82.2-Faraz iPhone 
+192.168.82.3-Bilal iPhone 
+192.168.82.4-A Bilal Android 
+192.168.82.5-lubna android 
+192.168.82.6-Mouna iPhone5 
+192.168.82.7-Ahmar Android 
+192.168.82.8-Farhan Grand Prime 
+192.168.82.9-Harris Android 
+192.168.82.10-Hassan iPhone 
+192.168.82.11-Nawaf Android 
+192.168.82.12-Azfar Android 
+192.168.82.13-Arslan Android 
+192.168.82.14-Awais Artist  
+192.168.82.15-Alina iPhone 
+192.168.82.16-shahid android 
+192.168.82.17-Zeeshu Android 
+192.168.82.18-sharon android 
+192.168.82.19-Mohsan Android 
+192.168.82.20-zeeshan qa android 2 
+192.168.82.21-amal iphone 
+192.168.82.22-gm android 
+192.168.82.23-WM Android 
+192.168.82.24-Adeel Android 
+192.168.82.25-accountant android 
+192.168.82.26-Zeeshan Shafiq Android 
+192.168.82.27-Arsalan Rafiq iPhone 
+192.168.82.28-hamza android 
+192.168.82.29-Kakul iPhone 
+192.168.82.30-Asad Android 
+192.168.82.31-Raza Android 
+192.168.82.32-namvar iphone 
+192.168.82.33-m umair android 
+192.168.82.34-zeeshan admin iphone 
+192.168.82.35-fazi iphone 6s 
+192.168.82.36-Bilal ipod disable es 
+192.168.82.37-ahmad kamal android 
+192.168.82.38-Ammar Family 
+192.168.82.39-Ammar Family 
+192.168.82.40-Ammar Family 
+192.168.82.41-ali misbah android 
+192.168.82.42-kashif android 
+192.168.82.43-ayesha iphone 6 
+192.168.82.44-Afsheen Android 
+192.168.82.45-farhan asghar android 
+192.168.82.46-zeeshan QA Android 
+192.168.82.47-ali liaqat qa 
+192.168.82.48-salman art iphone 
+192.168.82.49-Moosa iPhone 
+192.168.82.50-farhan s8 
+192.168.82.51-Amal iPad 
+192.168.82.52-bilal qa  
+192.168.82.53-Bajwa Personal 
+192.168.82.54-nawaf cousin ipad 
+192.168.82.55-Ayesha Art iPhone 
+192.168.82.56-goraya 
+192.168.82.57-ali android 
+192.168.82.58-khalid mehmood android 
+192.168.82.59-zeeshan shafiq watch 
+192.168.82.60-Ahmer Android
+192.168.82.63-GM Android
+192.168.82.61-Farwa iPhone
+192.168.82.62-Arslan Personal
+192.168.82.63-GM android
+192.168.82.64-Osama android
+192.168.82.65-Asharib Android
+192.168.82.66-Ramsha
+192.168.82.67-shahzaib android
+192.168.82.68-Jibran Android
+192.168.82.69-Uraiba iPhone
+192.168.82.240-Sunny 
+192.168.82.241-shahzad android 
+192.168.82.242-Guard @Ammar 
+192.168.82.243-Guard @Ammar laptop 
+192.168.82.244-Ammar Driver / Glaxy Nexus  
+192.168.82.245-Ramzan Guard 
