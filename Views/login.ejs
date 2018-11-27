@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Network Monitor</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index"><span>
+                        <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                            id="" x="0px" y="0px" width="170px" height="20px" viewBox="148.845 163.264 1152 149.505"
+                            enable-background="new 148.845 163.264 1152 149.505" xml:space="preserve">
+                            <g id="g10" transform="matrix(1.3333333,0,0,-1.3333333,0,492)">
+                                <g id="g12" transform="scale(0.1)">
+                                    <g id="text">
+                                        <path id="path14" fill="#7B7979" d="M4106.91,1506.197c-67.009-77.666-159.888-133.997-277.141-133.997     c-178.169,0-350.229,112.683-350.229,394.38c0,283.238,172.061,395.922,350.229,395.922c117.253,0,210.132-56.341,277.141-134.011     l-114.207-102.019c-38.071,47.208-92.893,80.709-156.841,80.709c-126.394,0-200.999-71.569-200.999-240.601     c0-167.498,74.604-239.07,200.999-239.07c63.948,0,118.77,33.508,156.841,80.713L4106.91,1506.197"></path>
+                                        <path id="path16" fill="#7B7979" d="M4215.008,2465.519h155.325v-884.711c0-35.032,19.797-53.298,57.869-53.298h53.298v-146.177     h-68.533c-112.676,0-197.959,48.721-197.959,187.295V2465.519"></path>
+                                        <path id="path18" fill="#7B7979" d="M5022.071,1950.839c-22.837,31.97-71.572,56.342-124.863,56.342     c-53.298,0-102.019-24.371-124.871-56.342c-28.923-41.118-38.064-71.569-38.064-182.728c0-112.676,9.141-143.145,38.064-184.263     c22.852-31.963,71.572-56.338,124.871-56.338c53.291,0,102.026,24.375,124.863,56.338c28.931,41.118,38.071,71.587,38.071,182.732     C5060.143,1879.27,5051.002,1909.721,5022.071,1950.839z M4662.708,2063.519c42.634,47.201,114.199,98.983,234.5,98.983     c120.293,0,191.865-51.782,234.5-98.983c59.392-65.479,83.752-129.437,83.752-295.408c0-167.512-24.36-231.46-83.752-296.939     c-42.634-47.212-114.207-98.972-234.5-98.972c-120.3,0-191.865,51.76-234.5,98.972c-59.385,65.479-83.76,129.426-83.76,296.939     C4578.949,1934.081,4603.324,1998.04,4662.708,2063.519"></path>
+                                        <path id="path20" fill="#7B7979" d="M5369.283,2153.361h155.317v-459.869c0-105.073,65.471-165.982,153.787-165.982     c86.799,0,152.285,60.908,152.285,165.982v459.869h155.31v-772.028h-155.31v82.222h-3.04     c-48.743-60.908-118.784-91.355-199.482-91.355c-121.831,0-258.867,92.878-258.867,267.986V2153.361"></path>
+                                        <path id="path22" fill="#7B7979" d="M6298.148,1768.111c0-120.3,7.624-240.601,153.794-240.601     c144.668,0,152.277,127.925,152.277,240.601c0,111.16-7.609,239.07-152.277,239.07     C6305.772,2007.181,6298.148,1886.88,6298.148,1768.111z M6604.22,1462.039c-48.728-53.298-120.293-89.839-199.482-89.839     c-94.409,0-162.927,42.634-207.085,100.496c-42.642,54.814-54.821,105.066-54.821,295.415c0,188.818,12.18,239.07,54.821,293.888     c44.158,57.861,112.676,100.503,207.085,100.503c79.189,0,141.614-36.551,199.482-91.373v394.391h155.311V1381.333H6604.22     V1462.039"></path>
+                                        <path id="path24" fill="#7B7979" d="M7517.895,1506.197c-67.009-77.666-159.902-133.997-277.156-133.997     c-178.154,0-350.229,112.683-350.229,394.38c0,283.238,172.075,395.922,350.229,395.922c117.254,0,210.147-56.341,277.156-134.011     l-114.214-102.019c-38.071,47.208-92.894,80.709-156.849,80.709c-126.379,0-200.998-71.569-200.998-240.601     c0-167.498,74.619-239.07,200.998-239.07c63.955,0,118.777,33.508,156.849,80.713L7517.895,1506.197"></path>
+                                        <path id="path26" fill="#7B7979" d="M8052.365,1708.719h-185.771c-91.37,0-134.004-36.548-134.004-92.893     c0-51.768,41.111-97.441,146.184-97.441c129.441,0,173.591,13.696,173.591,133.997V1708.719z M8052.365,1449.859h-3.047     c-31.978-53.298-85.276-77.659-190.349-77.659c-172.068,0-272.571,102.019-272.571,236.023     c0,123.34,85.276,228.406,251.265,228.406h214.702v80.713c0,73.077-47.205,98.969-158.364,98.969     c-80.698,0-118.777-15.22-146.191-59.381L7626,2049.822c59.377,82.218,144.653,112.679,260.383,112.679     c190.334,0,321.298-63.962,321.298-254.3v-526.868h-155.317V1449.859"></path>
+                                        <path id="path28" fill="#7B7979" d="M8522.909,1768.111c0-120.3,7.624-240.601,153.794-240.601     c144.668,0,152.277,127.925,152.277,240.601c0,111.16-7.609,239.07-152.277,239.07     C8530.533,2007.181,8522.909,1886.88,8522.909,1768.111z M8828.98,1462.039c-48.728-53.298-120.293-89.839-199.482-89.839     c-94.408,0-162.927,42.634-207.084,100.496c-42.643,54.814-54.822,105.066-54.822,295.415c0,188.818,12.18,239.07,54.822,293.888     c44.157,57.861,112.676,100.503,207.084,100.503c79.189,0,141.614-36.551,199.482-91.373v394.391h155.311V1381.333H8828.98     V1462.039"></path>
+                                        <path id="path30" fill="#7B7979" d="M9601.02,1836.629c-4.556,117.25-71.572,179.681-162.928,179.681     c-91.369,0-159.902-62.432-162.941-179.681H9601.02z M9275.15,1708.719c0-126.387,77.658-190.335,184.248-190.335     c59.393,0,123.34,27.393,169.035,74.604l112.676-95.933c-76.143-88.315-175.121-124.856-278.656-124.856     c-158.365,0-342.613,76.135-342.613,392.864c0,299.978,169.007,397.438,318.252,397.438c170.545,0,318.245-126.39,318.245-325.873     v-127.91H9275.15"></path>
+                                    </g>
+                                    <g id="symbole">
+                                        <path id="path32" fill="#6ED0F6" d="M2021.961,2433.029l271.868-180.267h298.762l0.139-725.208h-480.15l269.982-183.325h454.548     v909.95l-271.421,178.85H2021.961"></path>
+                                        <path id="path34" fill="#6ED0F6" d="M1360.69,1527.554l0.011,724.966l570.641,0.242l-271.86,180.267H1116.34v-905.475      l271.271-183.083h634.351l-275.76,183.083H1360.69"></path>
+                                        <path id="path36" fill="#00ADEF" d="M1116.34,2433.029l271.271-180.267V1344.47l-271.271,183.083V2433.029"></path>
+                                        <path id="path38" fill="#00ADEF" d="M2837.11,1344.47l-271.421,183.318v724.973h271.421V1344.47"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </span>NetMonitor</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="index"><i class="fas fa-tachometer-alt mr-1"></i>&nbsp;&nbsp;Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="users"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;All Users</a>
+                        </li>
+                        <%  if(user){  %>
+                            <li>
+                                <a href="changePassword"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;Change Password</a>
+                            </li>
+                        <%  }  %>
+                        <%  if(user){  %>
+                            <li>
+                                <a href="logout"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;Logout</a>
+                            </li>
+                            <%  }  %>
+                        <!-- /.nav-second-level -->
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper">
+
+            <div style="max-width: 30%; margin-left: auto; margin-right: auto; padding-top: 10%; background-color: white;">
+                <form method="post" action="/login" class="">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+                <%  if(success_msg.length > 0){  %>
+                <div class="alert alert-success" style="margin-top: 2%;">
+                    <%=  success_msg  %>
+                </div>
+                <%  } %>
+                <%  if(error_msg.length > 0){  %>
+                <div class="alert alert-danger" style="margin-top: 2%;">
+                    <%=  error_msg  %>
+                </div>
+                <%  } %>
+                <%  if(error.length > 0){  %>
+                <div class="alert alert-danger" style="margin-top: 2%;">
+                    <%=  error  %>
+                </div>
+                <%  } %>
+            </div>
+        </div>
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

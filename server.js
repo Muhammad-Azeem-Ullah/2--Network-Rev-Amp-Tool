@@ -7,8 +7,8 @@ var mikroNode            = require( 'mikronode' ),
     express              = require('express'),
     http                 = require('http'),
     path                 = require('path'),
-    WebSocket            = require('ws'),
-    app                  = require('./app.js');
+    WebSocket            = require('ws');
+//    app                  = require('./app.js');
 
 
 
@@ -55,35 +55,6 @@ databasePromise
         }, 5000  );
 
 
-      app.get(  '/', function (req, res) {
-
-        res.render( "index", {
-            "listObj": []
-        } );
-
-      } );
-
-      app.get(  '/index', function (req, res) {
-
-        res.render( "index", {
-            "listObj": []
-        } );
-
-      } );
-
-      app.get(  '/users', function (req, res) {
-
-        controllerMongo.getAllUserDetails( res );
-
-      } );
-
-      app.get(  '/user', function (req, res) {
-
-        controllerMongo.getAllUserRequestDetails( req.query.ip , res );
-        
-      });
-
-      app.listen(4000);
     })
   .catch( function notOk( err ) {
 
@@ -93,29 +64,7 @@ databasePromise
 
 
 
-  wss.on( 'connection', ws => {
 
-    ws.on(  'message', message => {
-
-      var msgObj = JSON.parse( message );
-      controllerMongo.getAllUserRequestDetailsByIp( msgObj.ipAddress , msgObj.timestamp , ws  );
-
-    } );
-
-  } );
-
-
-
-  wssForUsers.on( 'connection', ws => {
-
-    ws.on(  'message', message => {
-
-      var msgObj = JSON.parse( message );
-      controllerMongo.getAllUserDetailsWs( ws);
-
-    } );
-
-  } );
 
 
 

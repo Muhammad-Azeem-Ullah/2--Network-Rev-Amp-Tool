@@ -39,7 +39,6 @@ router.get('/changePassword', ensureAuthenticated, function (req, res, next) {
 });
 
 router.post('/changePassword', ensureAuthenticated, function (req, res, next) {
-  console.log(req.body);
   if (req.body.NewPassword.length < 8) {
     req.flash('error_msg', 'Password should be minimum 8 characters long');
     res.redirect('/changePassword');

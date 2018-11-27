@@ -79,6 +79,7 @@ function ipCgiRequestFunction(){
                 result                    =  result.split( ' * *\n' );
                 requestsDetails = result;
                 generateRequestData( result );
+                console.log( result );
             }
 
         });
