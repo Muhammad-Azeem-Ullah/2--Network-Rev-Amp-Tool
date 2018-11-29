@@ -1,4 +1,4 @@
-var urlConst = window.location.href.replace(":4000/users", "").replace( "http://" , "" );
+var urlConst = window.location.href.replace(":4000/allusers", "").replace( "http://" , "" );
 firstTrimIndex    = window.location.href.search( ":" ) ;
 firstTrimStr      = window.location.href.substr(firstTrimIndex+1 );
 firstTrimIndex    = firstTrimStr.search( ":" , 2 ) ;
@@ -8,13 +8,14 @@ firstTrimStr      = firstTrimStr.substr(0 , firstTrimIndex ).replace( "//" , "" 
 
 
 
-var ws = new WebSocket( "ws://"+firstTrimStr+":8086" );
+var ws = new WebSocket( "ws://"+firstTrimStr+":8088" );
 currentTimeStamp = getDateToTimeStamp();
 
 ws.onopen = function (){
   
     var url = new URL( window.location.href );
     var ip = url.searchParams.get("ip");
+
     ws.send( JSON.stringify({
         timestamp : currentTimeStamp,
         ipAddress : ip
@@ -23,13 +24,14 @@ ws.onopen = function (){
    
    
    setInterval(function(){ 
+
         var url = new URL( window.location.href );
         var ip = url.searchParams.get("ip");
         ws.send( JSON.stringify({
             timestamp : currentTimeStamp,
-            ipAddress : ip
+            ipAddress : "none"
         }));
-     }, 1000);
+     }, 5000);
      
 
   };
@@ -95,54 +97,22 @@ function getDateToTimeStamp() {
 
 }
 
-$(document).ready(function () {
-    $('#dataTables-example').DataTable({
-        responsive: true ,
-        "drawCallback": function( settings ) {
-          
-            numPackets = 0;
-            packetsSize = 0;
-            var count = 0;
-            $('#dataTables-example').DataTable().rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-                var data = this.data();
-                numPackets += parseFloat( data[4] );
-                packetsSize += parseFloat( data[5] );
-                count++;
-            
-            } );
-          
-            jQuery( "#nopackets" ) .html( numPackets );
-            jQuery( "#packSize" ) .html( packetsSize );
-        }
-    });
-});
 
-var numPackets = 0;
-var packetsSize = 0;
 
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min =  Date.parse( $('#date_from').val() );
         var max =  Date.parse( $('#date_to').val() );
-        var age =  Date.parse( data[6] )   || 0; // use data for the age column
 
-        if( dataIndex === 0 )
-        {
-          
-            numPackets = 0;
-            packetsSize = 0;
-        }
-        
+   
+
+        var date =  Date.parse( data[6] )   || 0; // use data for the date column
+
         if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && age <= max ) ||
-             ( min <= age   && isNaN( max ) ) ||
-             ( min <= age   && age <= max ) )
+             ( isNaN( min ) && date <= max ) ||
+             ( min <= date   && isNaN( max ) ) ||
+             ( min <= date   && date <= max ) )
         {
-          
-            numPackets = numPackets + parseFloat( data[4] ) ;
-            packetsSize += parseFloat( data[5] ) ;
-            jQuery( "#nopackets" ) .html( numPackets );
-            jQuery( "#packSize" ) .html( packetsSize );
             return true;
         }
         return false;
@@ -150,28 +120,32 @@ $.fn.dataTable.ext.search.push(
 );
  
 $(document).ready(function() {
-    var table = $('#dataTables-example').DataTable();
+    
     // Event listener to the two range filtering inputs to redraw on input
     $('#date_to, #date_from').change( function() {
+        var table = $('#dataTables-example').DataTable();
         table.draw();
     } );
 });
 
-    $(document).ready(function () {
-        // create DateTimePicker from input HTML element
-        $("#date_to").kendoDateTimePicker({
-            format: "HH:mm:ss yyyy/MM/dd" ,
-            timeFormat: "HH:mm:ss" 
-            
-        });
-        $("#date_from").kendoDateTimePicker({
-            format: "HH:mm:ss yyyy/MM/dd" ,
-            timeFormat: "HH:mm:ss" 
-           
-        });
+$(document).ready(function () {
+    // create DateTimePicker from input HTML element
+    $("#date_to").kendoDateTimePicker({
+        format: "HH:mm:ss yyyy/MM/dd" ,
+        timeFormat: "HH:mm:ss" 
+        
+    });
+    $("#date_from").kendoDateTimePicker({
+        format: "HH:mm:ss yyyy/MM/dd" ,
+        timeFormat: "HH:mm:ss" 
+        
+    });
+});
+
+$(document).ready(function () {
+    $('#dataTables-example').DataTable({
+        responsive: true,
+       
     });
 
-
-
-
-
+});

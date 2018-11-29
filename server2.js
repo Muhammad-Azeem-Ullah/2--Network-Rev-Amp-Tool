@@ -69,6 +69,9 @@ const wss = new WebSocket.Server({
 const wssForUsers = new WebSocket.Server({
   port: 8085
 });
+const wssForUsersAll = new WebSocket.Server({
+  port: 8088
+});
 
 
 var routerSubMaskIp = '192.168.8';
@@ -160,7 +163,7 @@ databasePromise
   .then(function whenOk(response) {
 
 
-
+    controllerMongo.startSpeedHistoryLog();
 
     app.get('/', function (req, res) {
 
@@ -187,6 +190,14 @@ databasePromise
     app.get('/user', ensureAuthenticated, function (req, res) {
 
       controllerMongo.getAllUserRequestDetails(req.query.ip, res);
+
+    });
+
+
+    app.get('/allusers', ensureAuthenticated, function (req, res) {
+
+      controllerMongo.getAllUserRequestDetails( "none" , res);
+
 
     });
 
@@ -315,6 +326,17 @@ passport.deserializeUser(function (username, done) {
 });
 
 wss.on('connection', ws => {
+
+  ws.on('message', message => {
+
+    var msgObj = JSON.parse(message);
+    controllerMongo.getAllUserRequestDetailsByIp(msgObj.ipAddress, msgObj.timestamp, ws);
+
+  });
+
+});
+
+wssForUsersAll.on('connection', ws => {
 
   ws.on('message', message => {
 

@@ -41,9 +41,8 @@ wsServer.on('request', function (request) {
   var sendingUserListInterval = setInterval(function () {
 
     controllerMongo.getAllUserDetailsToGraph(connection);
-    console.log("sent");
 
-  }, 1000);
+  }, 5000);
 
   // user disconnected
   connection.on('close', function (connection) {

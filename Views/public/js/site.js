@@ -57,8 +57,8 @@ ws.onopen = function (){
             data = table.row('.'+obj.ipAddress.split('.').join('_')).data();
             if( data != undefined )
             {
-                data[2] = Number( parseFloat( obj.totalUpload ) /(1024.0 * 1024.0) ) ;
-                data[3] = Number( parseFloat( obj.totalDownload ) /(1024.0 * 1024.0) );
+                data[2] = Number( parseFloat( obj.totalUpload ) /(1024.0 * 1024.0) ).toFixed( 5 ) ;
+                data[3] = Number( parseFloat( obj.totalDownload ) /(1024.0 * 1024.0) ).toFixed( 5 );
                 data[4] = Number( parseFloat( obj.uspeed * 8 ) /(1024.0 * 1024.0) ).toFixed( 5 ) ;
                 data[5] = Number( parseFloat( obj.dspeed  * 8 ) /(1024.0 * 1024.0 ) ).toFixed( 5 ) ;
 

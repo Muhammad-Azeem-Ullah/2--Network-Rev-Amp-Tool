@@ -1,8 +1,10 @@
 var http = require('http'),
   MongoClient = require('mongodb').MongoClient,
   mikroNode = require('mikronode'),
+  fileServer      = require('fs'),
+  path            = require('path'),
   handleError = require('errorhandler'),
-  timestamp   = require(  'time-stamp' );
+  timestamp = require('time-stamp');
 
 
 var url = "mongodb://localhost:27017/";
@@ -36,6 +38,7 @@ module.exports.createConnection = function createConnnectWithMongo(dbName, netwo
     if (err) throw err;
 
     databaseObject = db.db(dbName);
+   
 
     databaseObject.createCollection(networkDnsLog_, function (err, res) {
 
@@ -121,62 +124,71 @@ module.exports.createConnection = function createConnnectWithMongo(dbName, netwo
 
     }, 10000);
 
-
-
-    /////////////////////////////////////////////////////umer graph/////////////////////////////////
-    setInterval(function () {
-      databaseObject.collection(networkUserDetails).find({}).limit(500).toArray(function (err, allUserDetails) {
-
-        if (err) throw err;
-        if (allUserDetails.length > 0) {
-          let totalSpeed = 0;
-          for (let i = 0; i < allUserDetails.length; i++) {
-            //make option array table here
-            if (typeof speedTable[allUserDetails[i].ipAddress] != 'undefined') {
-
-              if (speedTable[allUserDetails[i].ipAddress].length == 31) {
-                speedTable[allUserDetails[i].ipAddress].shift();
-              }
-
-              var time = (+new Date() - downloadMap[allUserDetails[i].ipAddress].timestamp) / 1000;
-
-              speedTable[allUserDetails[i].ipAddress].push(
-                (Math.round(((allUserDetails[i].totalDownload - downloadMap[allUserDetails[i].ipAddress].totalDownload) * 8 / (1024 * 1024)) * 1e5) / 1e5) / time);
-              downloadMap[allUserDetails[i].ipAddress] = {
-                totalDownload: allUserDetails[i].totalDownload,
-                timestamp: +new Date()
-              };
-              totalSpeed += speedTable[allUserDetails[i].ipAddress][speedTable[allUserDetails[i].ipAddress].length - 1];
-
-            } else {
-
-              speedTable[allUserDetails[i].ipAddress] = [];
-              speedTable['All Users'] = [];
-              speedTable[allUserDetails[i].ipAddress].push(0);
-              downloadMap[allUserDetails[i].ipAddress] = {
-                totalDownload: allUserDetails[i].totalDownload,
-                timestamp: +new Date()
-              };
-
-            }
-          }
-          //allusers
-          if (speedTable['All Users'].length == 31) {
-            speedTable['All Users'].shift();
-          }
-
-          speedTable['All Users'].push(Math.round((totalSpeed) * 1e5) / 1e5);
-        }
-      });
-    }, 1000);
-    /////////////////////////////////////////////////////umer graph end///////////////////////////////////
-
-
-
-
-
     resolve_callback('fine');
   });
+
+}
+
+module.exports.startSpeedHistoryLog = function startSpeedHistoryLog() {
+
+  /////////////////////////////////////////////////////umer graph/////////////////////////////////
+  setInterval(function () {
+    databaseObject.collection(networkUserDetails).find({}).limit(500).toArray(function (err, allUserDetails) {
+      var time = 0;
+      if (err) throw err;
+      if (allUserDetails.length > 0) {
+        let totalSpeed = 0;
+        for (let i = 0; i < allUserDetails.length; i++) {
+          //make option array table here
+          if (typeof speedTable[allUserDetails[i].ipAddress] != 'undefined') {
+
+            if (speedTable[allUserDetails[i].ipAddress].length == 31) {
+              speedTable[allUserDetails[i].ipAddress].shift();
+            }
+
+            time = ((new Date().getTime() / 1000) - downloadMap[allUserDetails[i].ipAddress].timestamp)
+            time = parseFloat(time.toFixed(2));
+
+            speedTable[allUserDetails[i].ipAddress].push(((allUserDetails[i].totalDownload - downloadMap[allUserDetails[i].ipAddress].totalDownload) * 8 / (1024 * 1024)) / time);
+
+            downloadMap[allUserDetails[i].ipAddress] = {
+              totalDownload: allUserDetails[i].totalDownload,
+              timestamp: (new Date().getTime() / 1000)
+            };
+            totalSpeed += speedTable[allUserDetails[i].ipAddress][speedTable[allUserDetails[i].ipAddress].length - 1];
+
+          } else {
+
+            speedTable[allUserDetails[i].ipAddress] = [];
+
+
+            if (typeof (speedTable['All Users']) == 'undefined') {
+              speedTable['All Users'] = [];
+            }
+
+            for (let i = 0; i < speedTable['All Users'].length; i++) {
+              speedTable[allUserDetails[i].ipAddress].push(0);
+            }
+
+            downloadMap[allUserDetails[i].ipAddress] = {
+              totalDownload: allUserDetails[i].totalDownload,
+              timestamp: (new Date().getTime() / 1000)
+            };
+
+          }
+        }
+
+        //allusers
+        if (speedTable['All Users'].length == 31) {
+          speedTable['All Users'].shift();
+        }
+
+        speedTable['All Users'].push(totalSpeed);
+      }
+    });
+  }, 1000);
+  /////////////////////////////////////////////////////umer graph end///////////////////////////////////
+
 
 }
 
@@ -225,7 +237,9 @@ module.exports.getDnsAddress = function getDnsAddress(ipAddress, resolve) {
 }
 
 module.exports.getDnsCollection = function getDnsCollection(resolve) {
-  databaseObject.collection(networkDnsLog).find().toArray(function (err, result) {
+
+  clearDuForUsers();
+  databaseObject.collection(networkDnsLog).find({}).limit(50000).toArray(function (err, result) {
 
     if (err) throw err;
     resolve({
@@ -267,16 +281,16 @@ module.exports.saveUserDetails = function saveUserDetails(userDetail) {
   databaseObject.collection(networkUserDetails).findOneAndUpdate({
     'ipAddress': userEntry.ipAddress
   }, {
-    $inc: {
-      "totalUpload": userEntry.totalUpload,
-      "totalDownload": userEntry.totalDownload
-    },
-    $set: {
-      "ipName": userEntry.ipName
-    }
-  }, {
-    upsert: true,
-  });
+      $inc: {
+        "totalUpload": userEntry.totalUpload,
+        "totalDownload": userEntry.totalDownload
+      },
+      $set: {
+        "ipName": userEntry.ipName
+      }
+    }, {
+      upsert: true,
+    });
 
 }
 module.exports.saverequestDetails = function saverequestDetails(requestDetails) {
@@ -301,10 +315,10 @@ module.exports.getAllUserDetails = function getAllUserDetails(res) {
 }
 
 
-function compareArray(a,b) {
-  if (a.data[ a.data.length - 1 ] < b.data[ b.data.length - 1 ])
+function compareArray(a, b) {
+  if (a.data[a.data.length - 1] < b.data[b.data.length - 1])
     return 1;
-  if (a.data[ a.data.length - 1 ] > b.data[ b.data.length - 1 ])
+  if (a.data[a.data.length - 1] > b.data[b.data.length - 1])
     return -1;
   return 0;
 }
@@ -373,11 +387,51 @@ module.exports.getAllUserDetailsToGraph = function getAllUserDetailsToGraph(res)
 
 module.exports.getAllUserRequestDetails = function getAllUserRequestDetails(ipAddress, res) {
 
-  databaseObject.collection(networkUserRequestDetails).aggregate([{
-      $match: {
-        "ipAddress": ipAddress
+  if( ipAddress != "none" )
+  {
+      databaseObject.collection(networkUserRequestDetails).aggregate([{
+        $match: {
+          "ipAddress": ipAddress
+        }
+      },
+      {
+        $group: {
+          _id: "$targetIp",
+          ipAddress: {
+            $first: '$ipAddress'
+          },
+          ipName: {
+            $first: '$ipName'
+          },
+          targetIp: {
+            $first: '$targetIp'
+          },
+          type: {
+            $first: '$type'
+          },
+          timestamp: {
+            $first: '$timestamp'
+          },
+          totalSz: {
+            $sum: "$totalSz"
+          },
+          numPackets: {
+            $sum: "$numPackets"
+          }
+        }
       }
-    },
+      ]).toArray(function (err, allUserRequestDetails) {
+        if (err) throw err;
+        res.render("user", {
+          "listObj": allUserRequestDetails
+        });
+        return allUserRequestDetails;
+    
+      });
+
+  } else {
+
+    databaseObject.collection(networkUserRequestDetails).aggregate([  { $limit : 500 },
     {
       $group: {
         _id: "$targetIp",
@@ -404,93 +458,139 @@ module.exports.getAllUserRequestDetails = function getAllUserRequestDetails(ipAd
         }
       }
     }
-  ]).toArray(function (err, allUserRequestDetails) {
-    if (err) throw err;
-    res.render("user", {
-      "listObj": allUserRequestDetails
+    ]).toArray(function (err, allUserRequestDetails) {
+      if (err) throw err;
+      console.log(allUserRequestDetails.length   );
+      res.render("allUser", {
+        "listObj": allUserRequestDetails
+      });
+      return allUserRequestDetails;
+  
     });
-    return allUserRequestDetails;
+  }
 
-  });
 
 }
 
 module.exports.getAllUserRequestDetailsByIp = function getAllUserRequestDetailsByIp(ipAddress, timestamp, webSocket) {
-  databaseObject.collection(networkUserRequestDetails).find({
-    $and: [{
-      'searchnonce': {
-        $gte: timestamp
+
+
+  if( ipAddress != "none"  ) { 
+
+    databaseObject.collection(networkUserRequestDetails).find({
+      $and: [{
+        'searchnonce': {
+          $gte: timestamp
+        }
+      }, {
+        'ipAddress': ipAddress
+      }]
+    }).limit(500).toArray(function (err, result) {
+
+      if (err) throw err;
+      if (result.length > 0) {
+
+
+        data = JSON.stringify({
+          'Data': result
+        });
+        webSocket.send(data, function data(err) {
+          if (err) handleError(err);
+        });
+
+      } else {
+
+        data = JSON.stringify({
+          'Data': 'noData'
+        });
+        webSocket.send(data, function data(err) {
+          if (err) handleError(err);
+        });
+
       }
-    }, {
-      'ipAddress': ipAddress
-    }]
-  }).limit(500).toArray(function (err, result) {
+
+
+    });
+
+  } else {
+
+
+    databaseObject.collection(networkUserRequestDetails).find({
+      $and: [{
+        'searchnonce': {
+          $gte: timestamp
+        }
+      }]
+    }).limit(500).toArray(function (err, result) {
+
+      if (err) throw err;
+      if (result.length > 0) {
+
+
+        data = JSON.stringify({
+          'Data': result
+        });
+        webSocket.send(data, function data(err) {
+          if (err) handleError(err);
+        });
+
+      } else {
+
+        data = JSON.stringify({
+          'Data': 'noData'
+        });
+        webSocket.send(data, function data(err) {
+          if (err) handleError(err);
+        });
+
+      }
+
+
+    });
+
+  }
+
+}
+allUsersSpeed = [];
+module.exports.getAllUserDetailsWs = function getAllUserDetailsWs(webSocket) {
+  databaseObject.collection(networkUserDetails).find().limit(500).toArray(function (err, result) {
+
+
 
     if (err) throw err;
     if (result.length > 0) {
 
+      for (var ele = 0; ele < result.length; ele++) {
 
-      data = JSON.stringify({
-        'Data': result
-      });
+        if (allUsersSpeed[result[ele].ipAddress] === undefined) {
+
+          allUsersSpeed[result[ele].ipAddress] = { totalDownload: result[ele].totalDownload, totalUpload: result[ele].totalUpload, timestamp: timestamp('YYYYMMDDHHmmss') }
+
+        } else {
+
+          nowTimeStamp = timestamp('YYYYMMDDHHmmss');
+          stampDiff = nowTimeStamp - allUsersSpeed[result[ele].ipAddress].timestamp;
+          dspeed = (result[ele].totalDownload - allUsersSpeed[result[ele].ipAddress].totalDownload) / stampDiff;
+          uspeed = (result[ele].totalUpload - allUsersSpeed[result[ele].ipAddress].totalUpload) / stampDiff;
+          result[ele].dspeed = dspeed;
+          result[ele].uspeed = uspeed;
+          allUsersSpeed[result[ele].ipAddress] = { totalDownload: result[ele].totalDownload, totalUpload: result[ele].totalUpload, timestamp: timestamp('YYYYMMDDHHmmss') }
+
+        }
+
+      };
+
+      data = JSON.stringify({ 'Data': result });
       webSocket.send(data, function data(err) {
         if (err) handleError(err);
       });
-
-    } else {
-
-      data = JSON.stringify({
-        'Data': 'noData'
-      });
-      webSocket.send(data, function data(err) {
-        if (err) handleError(err);
-      });
-
     }
-
-
-  });
-}
-allUsersSpeed = [];
-module.exports.getAllUserDetailsWs =  function getAllUserDetailsWs( webSocket ) {
-  databaseObject.collection( networkUserDetails ).find().limit( 500 ).toArray(function( err, result ) {
-
-   
-
-      if (err) throw err;
-      if( result.length > 0 ){
-
-        for( var ele = 0 ; ele < result.length ; ele++ ){
-        
-          if( allUsersSpeed[ result[ ele ].ipAddress ] === undefined ) {
-    
-            allUsersSpeed[ result[ ele ].ipAddress ] = {  totalDownload : result[ ele ].totalDownload  ,  totalUpload : result[ ele ].totalUpload , timestamp : timestamp( 'YYYYMMDDHHmmss' ) }
-    
-          } else {
-    
-            nowTimeStamp =  timestamp( 'YYYYMMDDHHmmss' );
-            stampDiff    = nowTimeStamp - allUsersSpeed[ result[ ele ].ipAddress ].timestamp ;
-            dspeed       = (  result[ ele ].totalDownload - allUsersSpeed[ result[ ele ].ipAddress ].totalDownload ) / stampDiff ;
-            uspeed       = (   result[ ele ].totalUpload - allUsersSpeed[ result[ ele ].ipAddress ].totalUpload ) / stampDiff ;
-            result[ ele ].dspeed= dspeed;
-            result[ ele ].uspeed = uspeed;
-            allUsersSpeed[ result[ ele ].ipAddress ] = {  totalDownload : result[ ele ].totalDownload  ,  totalUpload : result[ ele ].totalUpload , timestamp : timestamp( 'YYYYMMDDHHmmss' ) }
-    
-          }
-    
-        };
-   
-        data = JSON.stringify( { 'Data' : result } );
-        webSocket.send( data  ,   function data(  err ) {
-          if (  err ) handleError( err  );
-        });
-      }
-      else{
-        data = JSON.stringify( { 'Data' : 'noData'  } );
-        webSocket.send(   data    , function data (    err   ) {
-          if (  err ) handleError(  err );
-        });
-      }
+    else {
+      data = JSON.stringify({ 'Data': 'noData' });
+      webSocket.send(data, function data(err) {
+        if (err) handleError(err);
+      });
+    }
 
 
   });
@@ -503,5 +603,56 @@ module.exports.removeCollection = function removeCollection() {
     process.exit();
   });
 
+
+}
+
+
+function clearDuForUsers() {
+  
+  fileServer.readFile( path.join(__dirname, '../Models/log.txt') ,  { encoding: 'utf-8' } , function(err, result) {
+    result = result.split( "\n" );
+   
+    d1 = new Date( result );
+    d2 = new Date( timestamp('YYYY/MM/DD HH:mm:ss')  );
+
+    if( d1 == "Invalid Date" ){
+      fileServer.writeFile( path.join(__dirname, '../Models/log.txt') , timestamp('YYYY/MM/DD HH:mm:ss') , function(err) {
+        if(err) {
+            return console.log(err);
+        }
+    });
+
+    }
+
+    d1.setDate( d1.getDate() + 7 );
+    if( d2 > d1 ) {
+
+      console.log( "i called it " );
+      databaseObject.collection( networkUserDetails ).updateMany(
+ 
+        { ipAddress: { $ne: "XXXXXXXX" } },
+      
+        {
+      
+          $set: { "totalDownload": 0 ,  totalUpload : 0  },
+      
+        }
+      
+     )
+
+
+
+      fileServer.writeFile( path.join(__dirname, '../Models/log.txt') , timestamp('YYYY/MM/DD HH:mm:ss') , function(err) {
+        if(err) {
+            return console.log(err);
+        }
+    });
+
+    }
+   
+  });
+
+
+ 
 
 }
