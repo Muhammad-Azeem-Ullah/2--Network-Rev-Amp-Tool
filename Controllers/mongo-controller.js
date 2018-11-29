@@ -1,8 +1,8 @@
 var http = require('http'),
   MongoClient = require('mongodb').MongoClient,
   mikroNode = require('mikronode'),
-  fileServer      = require('fs'),
-  path            = require('path'),
+  fileServer = require('fs'),
+  path = require('path'),
   handleError = require('errorhandler'),
   timestamp = require('time-stamp');
 
@@ -38,7 +38,7 @@ module.exports.createConnection = function createConnnectWithMongo(dbName, netwo
     if (err) throw err;
 
     databaseObject = db.db(dbName);
-   
+
 
     databaseObject.createCollection(networkDnsLog_, function (err, res) {
 
@@ -281,16 +281,16 @@ module.exports.saveUserDetails = function saveUserDetails(userDetail) {
   databaseObject.collection(networkUserDetails).findOneAndUpdate({
     'ipAddress': userEntry.ipAddress
   }, {
-      $inc: {
-        "totalUpload": userEntry.totalUpload,
-        "totalDownload": userEntry.totalDownload
-      },
-      $set: {
-        "ipName": userEntry.ipName
-      }
-    }, {
-      upsert: true,
-    });
+    $inc: {
+      "totalUpload": userEntry.totalUpload,
+      "totalDownload": userEntry.totalDownload
+    },
+    $set: {
+      "ipName": userEntry.ipName
+    }
+  }, {
+    upsert: true,
+  });
 
 }
 module.exports.saverequestDetails = function saverequestDetails(requestDetails) {
@@ -372,7 +372,7 @@ module.exports.getAllUserDetailsToGraph = function getAllUserDetailsToGraph(res)
 
       yAxis: [{
         type: 'value',
-        name: 'Speed/Mbps',
+        name: 'Mbps',
         min: 0.1
       }],
 
@@ -387,9 +387,8 @@ module.exports.getAllUserDetailsToGraph = function getAllUserDetailsToGraph(res)
 
 module.exports.getAllUserRequestDetails = function getAllUserRequestDetails(ipAddress, res) {
 
-  if( ipAddress != "none" )
-  {
-      databaseObject.collection(networkUserRequestDetails).aggregate([{
+  if (ipAddress != "none") {
+    databaseObject.collection(networkUserRequestDetails).aggregate([{
         $match: {
           "ipAddress": ipAddress
         }
@@ -420,52 +419,54 @@ module.exports.getAllUserRequestDetails = function getAllUserRequestDetails(ipAd
           }
         }
       }
-      ]).toArray(function (err, allUserRequestDetails) {
-        if (err) throw err;
-        res.render("user", {
-          "listObj": allUserRequestDetails
-        });
-        return allUserRequestDetails;
-    
+    ]).toArray(function (err, allUserRequestDetails) {
+      if (err) throw err;
+      res.render("user", {
+        "listObj": allUserRequestDetails
       });
+      return allUserRequestDetails;
+
+    });
 
   } else {
 
-    databaseObject.collection(networkUserRequestDetails).aggregate([  { $limit : 500 },
-    {
-      $group: {
-        _id: "$targetIp",
-        ipAddress: {
-          $first: '$ipAddress'
-        },
-        ipName: {
-          $first: '$ipName'
-        },
-        targetIp: {
-          $first: '$targetIp'
-        },
-        type: {
-          $first: '$type'
-        },
-        timestamp: {
-          $first: '$timestamp'
-        },
-        totalSz: {
-          $sum: "$totalSz"
-        },
-        numPackets: {
-          $sum: "$numPackets"
+    databaseObject.collection(networkUserRequestDetails).aggregate([{
+        $limit: 500
+      },
+      {
+        $group: {
+          _id: "$targetIp",
+          ipAddress: {
+            $first: '$ipAddress'
+          },
+          ipName: {
+            $first: '$ipName'
+          },
+          targetIp: {
+            $first: '$targetIp'
+          },
+          type: {
+            $first: '$type'
+          },
+          timestamp: {
+            $first: '$timestamp'
+          },
+          totalSz: {
+            $sum: "$totalSz"
+          },
+          numPackets: {
+            $sum: "$numPackets"
+          }
         }
       }
-    }
     ]).toArray(function (err, allUserRequestDetails) {
       if (err) throw err;
-      console.log(allUserRequestDetails.length   );
+      console.log(allUserRequestDetails.length);
       res.render("allUser", {
         "listObj": allUserRequestDetails
       });
       return allUserRequestDetails;
-  
+
     });
   }
 
@@ -475,7 +476,7 @@ module.exports.getAllUserRequestDetails = function getAllUserRequestDetails(ipAd
 module.exports.getAllUserRequestDetailsByIp = function getAllUserRequestDetailsByIp(ipAddress, timestamp, webSocket) {
 
 
-  if( ipAddress != "none"  ) { 
+  if (ipAddress != "none") {
 
     databaseObject.collection(networkUserRequestDetails).find({
       $and: [{
@@ -564,7 +565,11 @@ module.exports.getAllUserDetailsWs = function getAllUserDetailsWs(webSocket) {
 
         if (allUsersSpeed[result[ele].ipAddress] === undefined) {
 
-          allUsersSpeed[result[ele].ipAddress] = { totalDownload: result[ele].totalDownload, totalUpload: result[ele].totalUpload, timestamp: timestamp('YYYYMMDDHHmmss') }
+          allUsersSpeed[result[ele].ipAddress] = {
+            totalDownload: result[ele].totalDownload,
+            totalUpload: result[ele].totalUpload,
+            timestamp: timestamp('YYYYMMDDHHmmss')
+          }
 
         } else {
 
@@ -574,19 +579,26 @@ module.exports.getAllUserDetailsWs = function getAllUserDetailsWs(webSocket) {
           uspeed = (result[ele].totalUpload - allUsersSpeed[result[ele].ipAddress].totalUpload) / stampDiff;
           result[ele].dspeed = dspeed;
           result[ele].uspeed = uspeed;
-          allUsersSpeed[result[ele].ipAddress] = { totalDownload: result[ele].totalDownload, totalUpload: result[ele].totalUpload, timestamp: timestamp('YYYYMMDDHHmmss') }
+          allUsersSpeed[result[ele].ipAddress] = {
+            totalDownload: result[ele].totalDownload,
+            totalUpload: result[ele].totalUpload,
+            timestamp: timestamp('YYYYMMDDHHmmss')
+          }
 
         }
 
       };
 
-      data = JSON.stringify({ 'Data': result });
+      data = JSON.stringify({
+        'Data': result
+      });
       webSocket.send(data, function data(err) {
         if (err) handleError(err);
       });
-    }
-    else {
-      data = JSON.stringify({ 'Data': 'noData' });
+    } else {
+      data = JSON.stringify({
+        'Data': 'noData'
+      });
       webSocket.send(data, function data(err) {
         if (err) handleError(err);
       });
@@ -608,51 +620,60 @@ module.exports.removeCollection = function removeCollection() {
 
 
 function clearDuForUsers() {
-  
-  fileServer.readFile( path.join(__dirname, '../Models/log.txt') ,  { encoding: 'utf-8' } , function(err, result) {
-    result = result.split( "\n" );
-   
-    d1 = new Date( result );
-    d2 = new Date( timestamp('YYYY/MM/DD HH:mm:ss')  );
 
-    if( d1 == "Invalid Date" ){
-      fileServer.writeFile( path.join(__dirname, '../Models/log.txt') , timestamp('YYYY/MM/DD HH:mm:ss') , function(err) {
-        if(err) {
-            return console.log(err);
+  fileServer.readFile(path.join(__dirname, '../Models/log.txt'), {
+    encoding: 'utf-8'
+  }, function (err, result) {
+    result = result.split("\n");
+
+    d1 = new Date(result);
+    d2 = new Date(timestamp('YYYY/MM/DD HH:mm:ss'));
+
+    if (d1 == "Invalid Date") {
+      fileServer.writeFile(path.join(__dirname, '../Models/log.txt'), timestamp('YYYY/MM/DD HH:mm:ss'), function (err) {
+        if (err) {
+          return console.log(err);
         }
-    });
+      });
 
     }
 
-    d1.setDate( d1.getDate() + 7 );
-    if( d2 > d1 ) {
+    d1.setDate(d1.getDate() + 7);
+    if (d2 > d1) {
 
-      console.log( "i called it " );
-      databaseObject.collection( networkUserDetails ).updateMany(
- 
-        { ipAddress: { $ne: "XXXXXXXX" } },
-      
+      console.log("i called it ");
+      databaseObject.collection(networkUserDetails).updateMany(
+
         {
-      
-          $set: { "totalDownload": 0 ,  totalUpload : 0  },
-      
+          ipAddress: {
+            $ne: "XXXXXXXX"
+          }
+        },
+
+        {
+
+          $set: {
+            "totalDownload": 0,
+            totalUpload: 0
+          },
+
         }
-      
-     )
+
+      )
 
 
 
-      fileServer.writeFile( path.join(__dirname, '../Models/log.txt') , timestamp('YYYY/MM/DD HH:mm:ss') , function(err) {
-        if(err) {
-            return console.log(err);
+      fileServer.writeFile(path.join(__dirname, '../Models/log.txt'), timestamp('YYYY/MM/DD HH:mm:ss'), function (err) {
+        if (err) {
+          return console.log(err);
         }
-    });
+      });
 
     }
-   
+
   });
 
 
- 
+
 
 }

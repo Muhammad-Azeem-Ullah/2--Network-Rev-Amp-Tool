@@ -95,9 +95,19 @@
                         <li>
                             <a href="users"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;All Users</a>
                         </li>
+                        <%  if(user){  %>
                         <li>
                             <a href="allUsers"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;All Users Details</a>
                         </li>
+                        <li>
+                            <a href="changePassword"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;Change Password</a>
+                        </li>
+                        <%  }  %>
+                        <%  if(user){  %>
+                        <li>
+                            <a href="logout"><i class="fas fa-users mr-1"></i>&nbsp;&nbsp;Logout</a>
+                        </li>
+                        <%  }  %>
                         <!-- /.nav-second-level -->
                     </ul>
                 </div>

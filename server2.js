@@ -250,7 +250,7 @@ databasePromise
 
     app.post('/login',
       passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/allusers',
         failureRedirect: '/login',
         failureFlash: true
       }),
